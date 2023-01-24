@@ -52,15 +52,7 @@ const BookSchema = new Schema({
 
     dateAdded: {
         type: Date,
-        required: [true, 'Date Added is a required field'],
-        validate: [
-            {
-                validator: function(dateAdded) {
-                    return this.dateCompleted >= dateAdded
-                },
-                message: 'Date Added should be smaller than or equal to Date Completed'
-            }
-        ]
+        required: [true, 'Date Added is a required field']
     },
 
     dateCompleted: {
