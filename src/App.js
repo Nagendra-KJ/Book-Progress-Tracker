@@ -11,8 +11,8 @@ function App() {
 
   const [arrReading, setArrReading] = useState([]);
 
-  const addNewBook = (newBook) => {
-    client.post('/api/book/create/', newBook)
+  const addNewBook = async (newBook) => {
+    await client.post('/api/book/create/', newBook)
           .then((response) => {
             setArrReading([...arrReading, response.data]);
           })
