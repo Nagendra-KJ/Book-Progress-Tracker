@@ -19,19 +19,10 @@ function App() {
     setArrReading(books);
   }
 
-  const completeBook = (bookIndex) => {
-    const books = [...arrReading];
-    books[bookIndex].pagesCompleted = books[bookIndex].totalPages;
-    setArrReading(books);
-  }
-
-  const updatePageCount = (event, index) => {
-    const newPageCount = event.target.value.replace(/\D/g, '');
+  const updatePageCount = (newPageCount, index) => {
     const books  = [...arrReading];
-    if (newPageCount <= books[index].totalPages) {
-      books[index].pagesCompleted = newPageCount;
-      setArrReading(books);
-    }
+    books[index].pagesCompleted = newPageCount;
+    setArrReading(books);
   }
 
   return (
@@ -43,7 +34,7 @@ function App() {
         {
         arrReading.map((book, index) => {
               return <BookData slNo={index+1} title={book.title} pagesCompleted={book.pagesCompleted} totalPages={book.totalPages} deleteHandler={(event) => deleteBook(event, index)} 
-                        key={book.title} completeBook={() => completeBook(index)} updatePageCount={(event) => updatePageCount(event,index)} className="col"/>
+                        key={book.title} updatePageCount={(newPageCount) => updatePageCount(newPageCount,index)} className="col"/>
           })
         }
       </div>
