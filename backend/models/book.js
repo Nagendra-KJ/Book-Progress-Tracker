@@ -65,7 +65,6 @@ const BookSchema = new Schema({
 
     dateCompleted: {
         type: Date,
-        required: [true, 'Date Completed is a required field'],
         validate: [
             {
                 validator: function(dateCompleted) {
