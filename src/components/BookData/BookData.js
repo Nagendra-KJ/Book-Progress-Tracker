@@ -1,12 +1,33 @@
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Button from 'react-bootstrap/Button';
 import { Card, Form } from 'react-bootstrap';
+import { useState } from 'react';
 
 
 
 
 function BookData(props) {
 
+    const [pagesRead, setPagesRead] = useState(props.pagesCompleted);
+
+    const onPagesUpdate = (event) => {
+        var newPages = event.target.value.replace(/\D/g, '');
+        if (newPages === '')
+            newPages = 0;
+        newPages = parseInt(newPages);
+        if (newPages <= props.totalPages)
+            setPagesRead(newPages);
+    }
+
+    const updatePages = () => {
+        props.updatePageCount(pagesRead);
+    }
+
+    const completeBook = () => {
+        props.updatePageCount(props.totalPages);
+        setPagesRead(props.totalPages);
+        
+    }
 
     return (
         <div className='container mt-3' style={{width: '25rem',}}>
@@ -23,7 +44,7 @@ function BookData(props) {
                             <Card.Text>Pages Completed</Card.Text>
                         </div>
                         <div className="col">
-                            <Form.Control type='text' value={props.pagesCompleted} onChange={props.updatePageCount} className='input-sm text-center bg-dark text-light'/>
+                            <Form.Control type='text' value={pagesRead} onChange={onPagesUpdate} className='input-sm text-center bg-dark text-light'/>
                         </div>
                     </div>
                     <div className="row align-items-center mb-1">
@@ -46,7 +67,8 @@ function BookData(props) {
                             <ProgressBar now={Math.trunc((props.pagesCompleted/props.totalPages)*100)} variant='success' label={Math.trunc((props.pagesCompleted/props.totalPages)*100)+'%'} min={0} max={100}/>
                     </div>
                     <div className='row gap-2'>
-                            <Button variant='outline-success btn-block' onClick={props.completeBook} size='lg'> Complete </Button>
+                            <Button variant='outline-secondary btn-block' onClick={updatePages} size='lg'> Update </Button>
+                            <Button variant='outline-success btn-block' onClick={completeBook} size='lg'> Complete </Button>
                             <Button variant='outline-danger btn-block' onClick={props.deleteHandler} size='lg'> Delete </Button>
                     </div>
                 </Card.Body>
