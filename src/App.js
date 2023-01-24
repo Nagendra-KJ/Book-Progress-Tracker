@@ -22,7 +22,14 @@ function App() {
   };
 
 
-  const deleteBook = (bookIndex) => {
+  const deleteBook = async (bookIndex) => {
+    await client.post('/api/book/delete', {id: arrReading[bookIndex]._id})
+                .then((response) => {
+                  console.log(response.data);
+                })
+                .catch((err) => {
+                  console.log(err.response.data.error);
+                })
     const books = [...arrReading];
     books.splice(bookIndex, 1);
     setArrReading(books);

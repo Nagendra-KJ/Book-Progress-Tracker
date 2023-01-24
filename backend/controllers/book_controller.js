@@ -13,4 +13,15 @@ module.exports = {
                 .then((Book) => res.send(Book))
                 .catch(next);
     },
+
+    delete(req, res, next)
+    {
+        const bookId = req.body.id;
+        Book.deleteOne({ _id: bookId })
+                .then((result) => {
+                    res.send(result)
+                })
+                .catch(next);
+    },
+
 }
