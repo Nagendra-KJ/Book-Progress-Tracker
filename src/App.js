@@ -43,7 +43,7 @@ function App() {
         {
         arrReading.map((book, index) => {
               return <BookData slNo={index+1} title={book.title} pagesCompleted={book.pagesCompleted} totalPages={book.totalPages} deleteHandler={() => deleteBook(index)} 
-                        key={book.title} updatePageCount={(newPageCount) => updatePageCount(newPageCount,index)} className="col"/>
+                        key={book._id} updatePageCount={(newPageCount) => updatePageCount(newPageCount,index)} className="col"/>
           })
         }
       </div>
