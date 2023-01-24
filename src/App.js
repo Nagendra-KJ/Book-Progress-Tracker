@@ -2,18 +2,26 @@ import { useState } from 'react';
 import './App.css';
 import { BookData } from './components/BookData/BookData';
 import { BookInput } from './components/BookInput/BookInput';
+import axios from 'axios';
+const client = axios.create({
+  baseURL: "http://localhost:3050/"
+})
 
 function App() {
 
   const [arrReading, setArrReading] = useState([]);
 
   const addNewBook = (newBook) => {
+    client.post('/api/book/create/', newBook)
+          .then((response) => console.log(response))
+          .catch((err)=> {
+            console.log(err.response.data.error)
+          });
     setArrReading([...arrReading, newBook]);
   };
 
 
-  const deleteBook = (event, bookIndex) => {
-    console.log(event);
+  const deleteBook = (bookIndex) => {
     const books = [...arrReading];
     books.splice(bookIndex, 1);
     setArrReading(books);
@@ -33,7 +41,7 @@ function App() {
       <div className="row">
         {
         arrReading.map((book, index) => {
-              return <BookData slNo={index+1} title={book.title} pagesCompleted={book.pagesCompleted} totalPages={book.totalPages} deleteHandler={(event) => deleteBook(event, index)} 
+              return <BookData slNo={index+1} title={book.title} pagesCompleted={book.pagesCompleted} totalPages={book.totalPages} deleteHandler={() => deleteBook(index)} 
                         key={book.title} updatePageCount={(newPageCount) => updatePageCount(newPageCount,index)} className="col"/>
           })
         }
