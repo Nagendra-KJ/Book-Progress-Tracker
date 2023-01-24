@@ -16,9 +16,11 @@ function BookInput(props) {
 
      const submitNewBook = (values, actions) => {
         var {title, pagesCompleted, totalPages} = values;
+        var today = new Date();
+        today = today.toISOString();
         pagesCompleted = parseInt(pagesCompleted);
         totalPages = parseInt(totalPages);
-        props.addBookHandler({title:title, pagesCompleted:pagesCompleted, totalPages:totalPages});
+        props.addBookHandler({title:title, pagesCompleted:pagesCompleted, totalPages:totalPages, dateAdded:today});
         actions.resetForm();
     }
 

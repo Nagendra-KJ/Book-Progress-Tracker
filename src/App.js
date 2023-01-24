@@ -13,11 +13,12 @@ function App() {
 
   const addNewBook = (newBook) => {
     client.post('/api/book/create/', newBook)
-          .then((response) => console.log(response))
+          .then((response) => {
+            setArrReading([...arrReading, response.data]);
+          })
           .catch((err)=> {
             console.log(err.response.data.error)
           });
-    setArrReading([...arrReading, newBook]);
   };
 
 
