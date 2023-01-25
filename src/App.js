@@ -62,12 +62,25 @@ function App() {
   }
 
   const addNewBook = async (newBook) => {
+    const pageUpdateBody = {};
+    pageUpdateBody.title = newBook.title;
+    pageUpdateBody.pagesCompleted = newBook.pagesCompleted;
+    pageUpdateBody.date = newBook.dateAdded;
+
     await client.post('/api/book/create/', newBook)
           .then((response) => {
-            setArrReading([...arrReading, response.data]);
+            loadUnreadBooks();
           })
           .catch((err)=> {
             console.log(err.response.data.error)
+          });
+
+    await client.post('/api/pageUpdate/create', pageUpdateBody)
+          .then((result) => {
+            /*Need to call endpoints for goalchecks*/ 
+          })
+          .catch(err => {
+            console.log(err.response.data.error);
           });
   };
 
