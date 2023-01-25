@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { BookData } from './components/BookData/BookData';
 import { BookInput } from './components/BookInput/BookInput';
@@ -10,6 +10,21 @@ const client = axios.create({
 function App() {
 
   const [arrReading, setArrReading] = useState([]);
+
+  useEffect(() => {
+    loadUnreadBooks();
+  }, [])
+
+  const loadUnreadBooks = async () => {
+    return await client.get('/api/book/fetchAllUnread')
+                .then((response) => {
+                  console.log(response.data);
+                  setArrReading(response.data);
+                })
+                .catch((err) => {
+                  console.log(err.response.data.error);
+                })
+  }
 
   const addNewBook = async (newBook) => {
     await client.post('/api/book/create/', newBook)
@@ -26,13 +41,11 @@ function App() {
     await client.post('/api/book/delete', {id: arrReading[bookIndex]._id})
                 .then((response) => {
                   console.log(response.data);
+                  loadUnreadBooks();
                 })
                 .catch((err) => {
                   console.log(err.response.data.error);
                 })
-    const books = [...arrReading];
-    books.splice(bookIndex, 1);
-    setArrReading(books);
   }
 
   const updatePageCount = (newPageCount, index) => {
