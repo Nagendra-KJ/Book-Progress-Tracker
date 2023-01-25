@@ -4,6 +4,7 @@ import { BookData } from './components/BookData/BookData';
 import { BookInput } from './components/BookInput/BookInput';
 import axios from 'axios';
 import { GoalInput } from './components/GoalInput/GoalInput';
+import { GoalStats } from './components/GoalStats/GoalsStats';
 const client = axios.create({
   baseURL: "http://localhost:3050/"
 })
@@ -34,7 +35,6 @@ function App() {
     const lastDay = new Date(Date.UTC(currentYear+1, 0, 1)).toISOString();
     await client.post('/api/goal/getGoal', {startDate: firstDay, endDate: lastDay})
                 .then((result) => {
-                  console.log(result.data);
                   const goals = {
                     dailyPageGoal: result.data.dailyPageGoal,
                     weeklyPageGoal: result.data.weeklyPageGoal,
@@ -94,7 +94,6 @@ function App() {
                 });
     await client.post('/api/pageUpdate/create', pageUpdateBody)
                 .then((result) => {
-                  console.log(result);
                 })
                 .catch(err => {
                   console.log(err.response.data.error);
@@ -106,7 +105,6 @@ function App() {
     const currentYear = new Date().getFullYear();
     newGoals.startDate = new Date(Date.UTC(currentYear, 0, 1,));
     newGoals.endDate = new Date(Date.UTC(currentYear + 1, 0, 1,));
-    console.log(newGoals);
     await client.post('/api/goal/updateGoal', newGoals)
                 .then((result)=>{
                   console.log(result);
@@ -122,6 +120,7 @@ function App() {
       <div className="d-flex justify-content-between">
         <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals}/>
         <BookInput addBookHandler={addNewBook}/>
+        <GoalStats dailyPageGoalData={[1,1]} weeklyPageGoalData={[2,2]} annualBookGoalData={[3,3]}/>
       </div>
       <div className="row">
         {
