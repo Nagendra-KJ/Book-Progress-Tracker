@@ -16,7 +16,7 @@ module.exports = (app) => {
     //Page Update Controller
     app.get('/api/pageUpdate/', PageUpdateController.greeting);
     app.post('/api/pageUpdate/create', PageUpdateController.create);
-    app.post('/api/pageUpdate/fetchPagesReadDailyCount', PageUpdateController.create);
+    app.post('/api/pageUpdate/fetchPageCount', PageUpdateController.fetchPageCount);
 
     //Goal Update Controller
     app.get('/api/goal/', GoalController.greeting);

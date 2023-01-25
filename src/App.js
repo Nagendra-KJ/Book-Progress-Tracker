@@ -24,14 +24,14 @@ function App() {
 
 
   const loadBooksReadCount = async () => {
-    console.log('Yooooooo')
     const currentYear = new Date().getFullYear();
     const firstDay = new Date(Date.UTC(currentYear, 0, 1)).toISOString();
     const lastDay = new Date(Date.UTC(currentYear+1, 0, 1)).toISOString();
+    const {dailyPageGoalData, weeklyPageGoalData} = goalProgress
     await client.post('/api/book/fetchReadBooksCount', {startDate: firstDay, endDate: lastDay})
                 .then(result => {
                   if (goalProgress.annualBookGoalData !== result.data.count)
-                    setGoalProgress({annualBookGoalData: result.data.count})
+                    setGoalProgress({annualBookGoalData: result.data.count, dailyPageGoalData:dailyPageGoalData, weeklyPageGoalData: weeklyPageGoalData})
                 })
                 .catch(err => console.log(err.response.data.error));
   }
@@ -65,6 +65,19 @@ function App() {
                     console.log(JSON.stringify(goals), JSON.stringify(readingGoal));
                 })
                 .catch(err => console.log(err.response.data.error));
+  }
+
+  const loadPageProgress = () => {
+    var previousDate = new Date(new Date().getTime() - 24*60*60*1000);
+    var currentDate = new Date(new Date());
+    console.log(currentDate.getD);
+
+    client.post('/api/pageUpdate/fetchPageCount', {startDate: previousDate, endDate:currentDate})
+          .then((result) => {
+            const {annualBookGoalData, weeklyPageGoalData} = goalProgress;
+            setGoalProgress({annualBookGoalData: annualBookGoalData, weeklyPageGoalData: weeklyPageGoalData, dailyPageGoalData: result});
+
+          });
   }
 
   const addNewBook = async (newBook) => {
@@ -107,6 +120,8 @@ function App() {
     var pageProgress = newPageCount - arrReading[index].pagesCompleted;
     var book = arrReading[index];
 
+ 
+
     const bookUpdateBody = {};
     const pageUpdateBody = {};
 
@@ -119,6 +134,8 @@ function App() {
     pageUpdateBody.title = book.title;
     pageUpdateBody.pagesCompleted = pageProgress;
     pageUpdateBody.date = dateCompleted;
+
+
     
     
     await client.post('/api/book/updatePageCount', bookUpdateBody)
@@ -130,7 +147,8 @@ function App() {
                 });
     await client.post('/api/pageUpdate/create', pageUpdateBody)
                 .then((result) => {
-                  /*Need to call endpoints for goalchecks*/ 
+                  /*Need to call endpoints for goalchecks*/
+                  loadPageProgress(); 
                 })
                 .catch(err => {
                   console.log(err.response.data.error);
@@ -156,7 +174,7 @@ function App() {
       <div className="d-flex justify-content-between">
         <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals}/>
         <BookInput addBookHandler={addNewBook}/>
-        <GoalStats dailyPageGoalData={[1,1]} weeklyPageGoalData={[2,2]} annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
+        <GoalStats dailyPageGoalData={goalProgress.dailyPageGoalData} weeklyPageGoalData={[2,2]} annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
       </div>
       <div className="row">
         {

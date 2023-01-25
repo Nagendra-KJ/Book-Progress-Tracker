@@ -50,7 +50,6 @@ module.exports = {
             $gte: req.body.startDate,
             $lt: req.body.endDate
         }
-        console.log(buildQuery);
         Book.countDocuments(buildQuery)
             .then((count) =>
             res.send({count}))
