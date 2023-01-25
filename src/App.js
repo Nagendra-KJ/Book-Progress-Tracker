@@ -5,6 +5,7 @@ import { BookInput } from './components/BookInput/BookInput';
 import axios from 'axios';
 import { GoalInput } from './components/GoalInput/GoalInput';
 import { GoalStats } from './components/GoalStats/GoalsStats';
+import { async } from 'q';
 const client = axios.create({
   baseURL: "http://localhost:3050/"
 })
@@ -13,11 +14,26 @@ function App() {
 
   const [arrReading, setArrReading] = useState([]);
   const [readingGoal, setReadingGoal] = useState({dailyPageGoal: 0, weeklyPageGoal: 0, annualBookGoal: 0});
+  const [goalProgress, setGoalProgress] = useState({annualBookGoalData: 0, dailyPageGoalData: 0, weeklyPageGoalData: 0});
 
   useEffect(() => {
     loadUnreadBooks();
     loadGoals();
+    loadBooksReadCount();
   }, [])
+
+
+  const loadBooksReadCount = async () => {
+    const currentYear = new Date().getFullYear();
+    const firstDay = new Date(Date.UTC(currentYear, 0, 1)).toISOString();
+    const lastDay = new Date(Date.UTC(currentYear+1, 0, 1)).toISOString();
+    await client.post('/api/book/fetchReadBooksCount', {startDate: firstDay, endDate: lastDay})
+                .then(result => {
+                  setGoalProgress({annualBookGoalData: result.data.count})
+                })
+                .catch(err => console.log(err.response.data.error));
+  }
+
 
   const loadUnreadBooks = async () => {
     return await client.get('/api/book/fetchAllUnread')
@@ -99,6 +115,7 @@ function App() {
                 .catch(err => {
                   console.log(err.response.data.error);
                 })
+    loadBooksReadCount();
   }
 
   const updateGoals = async (newGoals) => {
@@ -121,7 +138,7 @@ function App() {
       <div className="d-flex justify-content-between">
         <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals}/>
         <BookInput addBookHandler={addNewBook}/>
-        <GoalStats dailyPageGoalData={[1,1]} weeklyPageGoalData={[2,2]} annualBookGoalData={[3,3]}/>
+        <GoalStats dailyPageGoalData={[1,1]} weeklyPageGoalData={[2,2]} annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
       </div>
       <div className="row">
         {
