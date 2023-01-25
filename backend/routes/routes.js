@@ -8,6 +8,7 @@ module.exports = (app) => {
     app.get('/api/book/', BookController.greeting);
     app.post('/api/book/create', BookController.create);
     app.post('/api/book/delete', BookController.delete);
+    app.get('/api/book/fetchAllUnread', BookController.fetchAllUnread);
 
     //Page Update Controller
     app.get('/api/pageUpdate/', PageUpdateController.greeting);

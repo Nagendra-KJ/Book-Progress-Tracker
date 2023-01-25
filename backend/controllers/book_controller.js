@@ -6,16 +6,14 @@ module.exports = {
         res.send({hello:'there', general:'kenobi'});
     },
 
-    create(req, res, next)
-    {
+    create(req, res, next)  {
         const BookProps = req.body;
         Book.create(BookProps)
                 .then((Book) => res.send(Book))
                 .catch(next);
     },
 
-    delete(req, res, next)
-    {
+    delete(req, res, next)  {
         const bookId = req.body.id;
         Book.deleteOne({ _id: bookId })
                 .then((result) => {
@@ -23,5 +21,17 @@ module.exports = {
                 })
                 .catch(next);
     },
+
+    fetchAllUnread(req, res, next)  {
+        const buildQuery = {};
+
+        buildQuery.dateCompleted = {
+            $exists: false
+        }
+        Book.find(buildQuery)
+            .then((books) =>
+            res.send(books))
+            .catch(next);
+    }
 
 }
