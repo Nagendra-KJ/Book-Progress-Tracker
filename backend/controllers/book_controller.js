@@ -37,10 +37,9 @@ module.exports = {
     updatePageCount(req, res, next) {
         const bookId = req.body.id;
         const newPages = req.body.pageCount;
-        Book.findByIdAndUpdate(bookId, {pagesCompleted: newPages}, {runValidators: true})
-            .then((result) => {
-                res.send(result);
-            })
+        const dateCompleted = req.body.dateCompleted;
+        Book.findByIdAndUpdate(bookId, {pagesCompleted: newPages, dateCompleted: dateCompleted})
+            .then((result) => res.send(result))
             .catch(next);
     }
 

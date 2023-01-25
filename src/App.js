@@ -48,10 +48,17 @@ function App() {
                 })
   }
 
-  const updatePageCount = (newPageCount, index) => {
-    const books  = [...arrReading];
-    books[index].pagesCompleted = newPageCount;
-    setArrReading(books);
+  const updatePageCount = async (newPageCount, index) => {
+    var dateCompleted;
+    if (newPageCount === arrReading[index].totalPages)
+      dateCompleted = new Date().toISOString();
+    await client.post('/api/book/updatePageCount', {id: arrReading[index]._id, pageCount: newPageCount, dateCompleted: dateCompleted})
+                .then(() => {
+                  loadUnreadBooks();
+                })
+                .catch((err) => {
+                  console.log(err.response.data.error);
+                })
   }
 
   return (

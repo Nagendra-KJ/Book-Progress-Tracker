@@ -22,9 +22,11 @@ const BookSchema = new Schema({
             },
             {
                 validator: function(pagesCompleted) {
+                    console.log(this);
+                    console.log(this.get('totalPages'))
                     return pagesCompleted <= this.totalPages;
                 },
-                message: 'Pages Completed must be lesser than Total Pages'
+                message: '{VALUE} must be lesser Total Pages'
             }
         ]
     },
