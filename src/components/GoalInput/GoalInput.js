@@ -10,9 +10,9 @@ import { useFormik } from "formik";
 function GoalInput(props)   {
 
     const inputSchema = yup.object().shape({
-        dailyPageGoal: yup.number('Daily Page Goal has to be a number').required('Daily Page Goal is required'),
-        weeklyPageGoal: yup.number('Weekly Page Goal has to be a number').moreThan(0, 'Weekly Page Goal has to be greater than 0').integer('Weekly Page Goal has to be an integer').required('This is a required field'),
-        annualBookGoal: yup.number('Annual Book Goal has to be a number').moreThan(0, 'Annual Book Goal has to be greated than 0').integer('Annual Book Goal has to be an integer').required('This is a required field')
+        dailyPageGoal: yup.number('Daily Page Goal has to be a number').moreThan(-1, 'Daily Page Goal has to be greater than or equal to 0').required('Daily Page Goal is required'),
+        weeklyPageGoal: yup.number('Weekly Page Goal has to be a number').moreThan(-1, 'Weekly Page Goal has to be greater than or equal to 0').integer('Weekly Page Goal has to be an integer').required('This is a required field'),
+        annualBookGoal: yup.number('Annual Book Goal has to be a number').moreThan(-1, 'Annual Book Goal has to be greated than or equal to 0').integer('Annual Book Goal has to be an integer').required('This is a required field')
     });
 
     const submitNewGoal = (values, actions) => {
@@ -31,7 +31,8 @@ function GoalInput(props)   {
             annualBookGoal: props.annualBookGoal
         },
         validationSchema: inputSchema,
-        onSubmit: submitNewGoal
+        onSubmit: submitNewGoal,
+        enableReinitialize:true
     });
 
     return(

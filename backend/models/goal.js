@@ -7,10 +7,6 @@ const GoalSchema = new Schema({
         required: [true, 'dailyPageGoal is a required field'],
         validate: [
             {
-                validator: dailyPageGoal => dailyPageGoal > 0,
-                message: 'Daily Page Goal has to be larger than 0'
-            },
-            {
                 validator: Number.isInteger,
                 message: 'dailyPageGoal should be an integer'
             }
@@ -21,10 +17,6 @@ const GoalSchema = new Schema({
         type: Number,
         required: [true, 'weeklyPageGoal is a required field'],
         validate: [
-            {
-                validator: weeklyPageGoal => weeklyPageGoal > 0,
-                message: 'Weekly Page Goal has to be larger than 0'
-            },
             {
                 validator: Number.isInteger,
                 message: 'weeklyPageGoal should be an integer'
@@ -38,14 +30,15 @@ const GoalSchema = new Schema({
         required: [true, 'annualBookGoal is a required field'],
         validate: [
             {
-                validator: annualBookGoal => annualBookGoal > 0,
-                message: 'Annul Book Goal has to be larger than 0'
-            },
-            {
                 validator: Number.isInteger,
                 message: 'annualBookGoal should be an integer'
             }
         ]
+    },
+
+    date: {
+        type: Date,
+        required: [true, 'Date is a required field']
     }
 
 });

@@ -19,4 +19,5 @@ module.exports = (app) => {
     //Goal Update Controller
     app.get('/api/goal/', GoalController.greeting);
     app.post('/api/goal/updateGoal', GoalController.upsertGoal);
+    app.post('/api/goal/getGoal', GoalController.findGoal);
 }
