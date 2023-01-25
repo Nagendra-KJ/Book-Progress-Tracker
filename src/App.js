@@ -5,6 +5,7 @@ import { BookInput } from './components/BookInput/BookInput';
 import axios from 'axios';
 import { GoalInput } from './components/GoalInput/GoalInput';
 import { GoalStats } from './components/GoalStats/GoalsStats';
+import moment from 'moment/moment';
 
 const client = axios.create({
   baseURL: "http://localhost:3050/"
@@ -20,13 +21,13 @@ function App() {
     loadUnreadBooks();
     loadGoals();
     loadBooksReadCount();
-  },)
+    loadPageProgress();
+  })
 
 
   const loadBooksReadCount = async () => {
-    const currentYear = new Date().getFullYear();
-    const firstDay = new Date(Date.UTC(currentYear, 0, 1)).toISOString();
-    const lastDay = new Date(Date.UTC(currentYear+1, 0, 1)).toISOString();
+    const firstDay = moment().startOf('year').toDate();
+    const lastDay = moment().endOf('year').add(1, 'days').toDate();
     const {dailyPageGoalData, weeklyPageGoalData} = goalProgress
     await client.post('/api/book/fetchReadBooksCount', {startDate: firstDay, endDate: lastDay})
                 .then(result => {
@@ -49,9 +50,8 @@ function App() {
   }
 
   const loadGoals = async () => {
-    const currentYear = new Date().getFullYear();
-    const firstDay = new Date(Date.UTC(currentYear, 0, 1,)).toISOString();
-    const lastDay = new Date(Date.UTC(currentYear+1, 0, 1)).toISOString();
+    const firstDay = moment().startOf('year').toDate();
+    const lastDay = moment().endOf('year').add(1, 'days').toDate();
     await client.post('/api/goal/getGoal', {startDate: firstDay, endDate: lastDay})
                 .then((result) => {
                   const goals = {
@@ -61,23 +61,40 @@ function App() {
                   };
                   if (JSON.stringify(goals) !== JSON.stringify(readingGoal))
                     setReadingGoal(goals);
-                  else
-                    console.log(JSON.stringify(goals), JSON.stringify(readingGoal));
                 })
                 .catch(err => console.log(err.response.data.error));
   }
 
-  const loadPageProgress = () => {
-    var previousDate = new Date(new Date().getTime() - 24*60*60*1000);
-    var currentDate = new Date(new Date());
-    console.log(currentDate.getD);
+  const loadPageProgress = async () => {
+    var currentDate = moment().startOf('day').toDate();
+    var nextDate = moment().startOf('day').add(1, 'days').toDate();
 
-    client.post('/api/pageUpdate/fetchPageCount', {startDate: previousDate, endDate:currentDate})
+    var firstDayOfWeek = moment().startOf('week').toDate();
+    var lastDayOfWeek = moment().endOf('week').toDate();
+    lastDayOfWeek = moment(lastDayOfWeek).add(1, 'days').toDate();
+
+    var dailyPageProgressUpdate, weeklyPageProgressUpdate;
+
+
+    await client.post('/api/pageUpdate/fetchPageCount', {startDate: currentDate, endDate:nextDate})
           .then((result) => {
-            const {annualBookGoalData, weeklyPageGoalData} = goalProgress;
-            setGoalProgress({annualBookGoalData: annualBookGoalData, weeklyPageGoalData: weeklyPageGoalData, dailyPageGoalData: result});
+            dailyPageProgressUpdate = result.data[0].pagesCompleted;
 
-          });
+          })
+          .catch(err => console.log(err.response.data.error));
+  
+    await client.post('/api/pageUpdate/fetchPageCount', {startDate: firstDayOfWeek, endDate:lastDayOfWeek})
+          .then((result) => {
+            weeklyPageProgressUpdate = result.data[0].pagesCompleted;
+          })
+          .catch(err => console.log(err.response.data.error));
+
+    const annualBookGoalData = goalProgress.annualBookGoalData;
+    var newProgressData = {annualBookGoalData:annualBookGoalData, dailyPageGoalData:dailyPageProgressUpdate, weeklyPageGoalData:weeklyPageProgressUpdate};
+
+    if (JSON.stringify(goalProgress) !== JSON.stringify(newProgressData))
+      setGoalProgress(newProgressData);
+    
   }
 
   const addNewBook = async (newBook) => {
@@ -97,6 +114,7 @@ function App() {
     await client.post('/api/pageUpdate/create', pageUpdateBody)
           .then((result) => {
             /*Need to call endpoints for goalchecks*/ 
+            loadPageProgress();
 
           })
           .catch(err => {
@@ -116,7 +134,7 @@ function App() {
   }
 
   const updatePageCount = async (newPageCount, index) => {
-    var dateCompleted = new Date().toISOString();
+    var dateCompleted = moment().toDate();
     var pageProgress = newPageCount - arrReading[index].pagesCompleted;
     var book = arrReading[index];
 
@@ -156,10 +174,9 @@ function App() {
   }
 
   const updateGoals = async (newGoals) => {
-    newGoals.date = new Date().toISOString();
-    const currentYear = new Date().getFullYear();
-    newGoals.startDate = new Date(Date.UTC(currentYear, 0, 1,));
-    newGoals.endDate = new Date(Date.UTC(currentYear + 1, 0, 1,));
+    newGoals.date = moment().toDate();
+    newGoals.startDate = moment().startOf('year').toDate();
+    newGoals.endDate = moment().endOf('year').add(1, 'days').toDate();
     await client.post('/api/goal/updateGoal', newGoals)
                 .then((result)=>{
                   setReadingGoal((({ dailyPageGoal, weeklyPageGoal, annualBookGoal }) => ({ dailyPageGoal, weeklyPageGoal, annualBookGoal }))(newGoals))
@@ -174,7 +191,9 @@ function App() {
       <div className="d-flex justify-content-between">
         <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals}/>
         <BookInput addBookHandler={addNewBook}/>
-        <GoalStats dailyPageGoalData={goalProgress.dailyPageGoalData} weeklyPageGoalData={[2,2]} annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
+        <GoalStats dailyPageGoalData={[goalProgress.dailyPageGoalData, Math.max(0, readingGoal.dailyPageGoal - goalProgress.dailyPageGoalData)]} 
+                   weeklyPageGoalData={[goalProgress.weeklyPageGoalData, Math.max(0, readingGoal.weeklyPageGoal - goalProgress.weeklyPageGoalData)]} 
+                   annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
       </div>
       <div className="row">
         {

@@ -18,7 +18,6 @@ function BookInput(props) {
         var {title, pagesCompleted, totalPages} = values;
         var today = new Date();
         var dateCompleted;
-        today = today.toISOString();
         pagesCompleted = parseInt(pagesCompleted);
         totalPages = parseInt(totalPages);
         if (pagesCompleted === totalPages)
