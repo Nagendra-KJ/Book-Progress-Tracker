@@ -15,11 +15,11 @@ module.exports = {
 
     delete(req, res, next)  {
         const bookId = req.body.id;
-        Book.deleteOne({ _id: bookId })
-                .then((result) => {
-                    res.send(result)
-                })
-                .catch(next);
+        Book.findByIdAndDelete(bookId)
+            .then((result) => {
+                res.send(result)
+            })
+            .catch(next);
     },
 
     fetchAllUnread(req, res, next)  {
@@ -31,6 +31,16 @@ module.exports = {
         Book.find(buildQuery)
             .then((books) =>
             res.send(books))
+            .catch(next);
+    },
+
+    updatePageCount(req, res, next) {
+        const bookId = req.body.id;
+        const newPages = req.body.pageCount;
+        Book.findByIdAndUpdate(bookId, {pagesCompleted: newPages}, {runValidators: true})
+            .then((result) => {
+                res.send(result);
+            })
             .catch(next);
     }
 
