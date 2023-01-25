@@ -3,6 +3,7 @@ import './App.css';
 import { BookData } from './components/BookData/BookData';
 import { BookInput } from './components/BookInput/BookInput';
 import axios from 'axios';
+import { GoalInput } from './components/GoalInput/GoalInput';
 const client = axios.create({
   baseURL: "http://localhost:3050/"
 })
@@ -81,10 +82,16 @@ function App() {
                 })
   }
 
+  const updateGoals = (newGoals) => {
+    console.log('Updated Goals', newGoals);
+  }
+
   return (
-    <div className="container">
-      <div className="row align-items-center justify-content-center">
+    <div className="container-fluid">
+      <div className="d-flex justify-content-between">
+        <GoalInput dailyPageGoal={1} weeklyPageGoal={10} annualBookGoal={100} updateGoals={updateGoals}/>
         <BookInput addBookHandler={addNewBook}/>
+        <GoalInput dailyPageGoal={1} weeklyPageGoal={10} annualBookGoal={100} updateGoals={updateGoals}/>
       </div>
       <div className="row">
         {
