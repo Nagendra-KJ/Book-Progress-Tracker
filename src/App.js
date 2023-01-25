@@ -18,7 +18,6 @@ function App() {
   const loadUnreadBooks = async () => {
     return await client.get('/api/book/fetchAllUnread')
                 .then((response) => {
-                  console.log(response.data);
                   setArrReading(response.data);
                 })
                 .catch((err) => {
@@ -40,7 +39,6 @@ function App() {
   const deleteBook = async (bookIndex) => {
     await client.post('/api/book/delete', {id: arrReading[bookIndex]._id})
                 .then((response) => {
-                  console.log(response.data);
                   loadUnreadBooks();
                 })
                 .catch((err) => {
@@ -49,14 +47,36 @@ function App() {
   }
 
   const updatePageCount = async (newPageCount, index) => {
-    var dateCompleted;
+    var dateCompleted = new Date().toISOString();
+    var pageProgress = newPageCount - arrReading[index].pagesCompleted;
+    var book = arrReading[index];
+
+    const bookUpdateBody = {};
+    const pageUpdateBody = {};
+
+    bookUpdateBody.id = book._id;
+    bookUpdateBody.pageCount = newPageCount;
     if (newPageCount === arrReading[index].totalPages)
-      dateCompleted = new Date().toISOString();
-    await client.post('/api/book/updatePageCount', {id: arrReading[index]._id, pageCount: newPageCount, dateCompleted: dateCompleted})
+      bookUpdateBody.dateCompleted = dateCompleted;
+
+
+    pageUpdateBody.title = book.title;
+    pageUpdateBody.pagesCompleted = pageProgress;
+    pageUpdateBody.date = dateCompleted;
+    
+    
+    await client.post('/api/book/updatePageCount', bookUpdateBody)
                 .then(() => {
                   loadUnreadBooks();
                 })
                 .catch((err) => {
+                  console.log(err.response.data.error);
+                });
+    await client.post('/api/pageUpdate/create', pageUpdateBody)
+                .then((result) => {
+                  console.log(result);
+                })
+                .catch(err => {
                   console.log(err.response.data.error);
                 })
   }

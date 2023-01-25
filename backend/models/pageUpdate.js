@@ -13,10 +13,6 @@ const PageUpdateSchema = new Schema({
         required: [true, 'Pages Completed is a required field'],
         validate: [
             {
-                validator: pages => pages >= 0,
-                message: 'Pages Completed should be greater than or equal to 0'
-            },
-            {
                 validator: Number.isInteger,
                 message: 'Pages Completed must be an integer'
             },
