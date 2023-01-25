@@ -5,7 +5,7 @@ import { BookInput } from './components/BookInput/BookInput';
 import axios from 'axios';
 import { GoalInput } from './components/GoalInput/GoalInput';
 import { GoalStats } from './components/GoalStats/GoalsStats';
-import { async } from 'q';
+
 const client = axios.create({
   baseURL: "http://localhost:3050/"
 })
@@ -20,16 +20,18 @@ function App() {
     loadUnreadBooks();
     loadGoals();
     loadBooksReadCount();
-  }, [])
+  },)
 
 
   const loadBooksReadCount = async () => {
+    console.log('Yooooooo')
     const currentYear = new Date().getFullYear();
     const firstDay = new Date(Date.UTC(currentYear, 0, 1)).toISOString();
     const lastDay = new Date(Date.UTC(currentYear+1, 0, 1)).toISOString();
     await client.post('/api/book/fetchReadBooksCount', {startDate: firstDay, endDate: lastDay})
                 .then(result => {
-                  setGoalProgress({annualBookGoalData: result.data.count})
+                  if (goalProgress.annualBookGoalData !== result.data.count)
+                    setGoalProgress({annualBookGoalData: result.data.count})
                 })
                 .catch(err => console.log(err.response.data.error));
   }
@@ -38,7 +40,8 @@ function App() {
   const loadUnreadBooks = async () => {
     return await client.get('/api/book/fetchAllUnread')
                 .then((response) => {
-                  setArrReading(response.data);
+                  if (JSON.stringify(response.data) !== JSON.stringify(arrReading))
+                      setArrReading(response.data);
                 })
                 .catch((err) => {
                   console.log(err.response.data.error);
@@ -56,7 +59,10 @@ function App() {
                     weeklyPageGoal: result.data.weeklyPageGoal,
                     annualBookGoal: result.data.annualBookGoal
                   };
-                  setReadingGoal(goals);
+                  if (JSON.stringify(goals) !== JSON.stringify(readingGoal))
+                    setReadingGoal(goals);
+                  else
+                    console.log(JSON.stringify(goals), JSON.stringify(readingGoal));
                 })
                 .catch(err => console.log(err.response.data.error));
   }
@@ -69,7 +75,7 @@ function App() {
 
     await client.post('/api/book/create/', newBook)
           .then((response) => {
-            loadUnreadBooks();
+            setArrReading([...arrReading, newBook]);
           })
           .catch((err)=> {
             console.log(err.response.data.error)
@@ -78,6 +84,7 @@ function App() {
     await client.post('/api/pageUpdate/create', pageUpdateBody)
           .then((result) => {
             /*Need to call endpoints for goalchecks*/ 
+
           })
           .catch(err => {
             console.log(err.response.data.error);
@@ -128,7 +135,6 @@ function App() {
                 .catch(err => {
                   console.log(err.response.data.error);
                 })
-    loadBooksReadCount();
   }
 
   const updateGoals = async (newGoals) => {
@@ -138,8 +144,7 @@ function App() {
     newGoals.endDate = new Date(Date.UTC(currentYear + 1, 0, 1,));
     await client.post('/api/goal/updateGoal', newGoals)
                 .then((result)=>{
-                  console.log(result);
-                  loadGoals();
+                  setReadingGoal((({ dailyPageGoal, weeklyPageGoal, annualBookGoal }) => ({ dailyPageGoal, weeklyPageGoal, annualBookGoal }))(newGoals))
                 })
                 .catch(err => {
                   console.log(err.response.data.error);
