@@ -3,6 +3,7 @@ import './App.css';
 import { BookData } from './components/BookData/BookData';
 import { BookInput } from './components/BookInput/BookInput';
 import axios from 'axios';
+import { GoalInput } from './components/GoalInput/GoalInput';
 const client = axios.create({
   baseURL: "http://localhost:3050/"
 })
@@ -10,9 +11,11 @@ const client = axios.create({
 function App() {
 
   const [arrReading, setArrReading] = useState([]);
+  const [readingGoal, setReadingGoal] = useState({dailyPageGoal: 0, weeklyPageGoal: 0, annualBookGoal: 0});
 
   useEffect(() => {
     loadUnreadBooks();
+    loadGoals();
   }, [])
 
   const loadUnreadBooks = async () => {
@@ -23,6 +26,23 @@ function App() {
                 .catch((err) => {
                   console.log(err.response.data.error);
                 })
+  }
+
+  const loadGoals = async () => {
+    const currentYear = new Date().getFullYear();
+    const firstDay = new Date(Date.UTC(currentYear, 0, 1,)).toISOString();
+    const lastDay = new Date(Date.UTC(currentYear+1, 0, 1)).toISOString();
+    await client.post('/api/goal/getGoal', {startDate: firstDay, endDate: lastDay})
+                .then((result) => {
+                  console.log(result.data);
+                  const goals = {
+                    dailyPageGoal: result.data.dailyPageGoal,
+                    weeklyPageGoal: result.data.weeklyPageGoal,
+                    annualBookGoal: result.data.annualBookGoal
+                  };
+                  setReadingGoal(goals);
+                })
+                .catch(err => console.log(err.response.data.error));
   }
 
   const addNewBook = async (newBook) => {
@@ -81,9 +101,26 @@ function App() {
                 })
   }
 
+  const updateGoals = async (newGoals) => {
+    newGoals.date = new Date().toISOString();
+    const currentYear = new Date().getFullYear();
+    newGoals.startDate = new Date(Date.UTC(currentYear, 0, 1,));
+    newGoals.endDate = new Date(Date.UTC(currentYear + 1, 0, 1,));
+    console.log(newGoals);
+    await client.post('/api/goal/updateGoal', newGoals)
+                .then((result)=>{
+                  console.log(result);
+                  loadGoals();
+                })
+                .catch(err => {
+                  console.log(err.response.data.error);
+                });
+  }
+
   return (
-    <div className="container">
-      <div className="row align-items-center justify-content-center">
+    <div className="container-fluid">
+      <div className="d-flex justify-content-between">
+        <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals}/>
         <BookInput addBookHandler={addNewBook}/>
       </div>
       <div className="row">
