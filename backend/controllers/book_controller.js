@@ -41,6 +41,20 @@ module.exports = {
         Book.findByIdAndUpdate(bookId, {pagesCompleted: newPages, dateCompleted: dateCompleted})
             .then((result) => res.send(result))
             .catch(next);
+    },
+
+    fetchAllRead(req, res, next) {
+        const buildQuery = {};
+
+        buildQuery.dateCompleted = {
+            $gte: req.body.startDate,
+            $lt: req.body.endDate
+        }
+        console.log(buildQuery);
+        Book.countDocuments(buildQuery)
+            .then((count) =>
+            res.send({count}))
+            .catch(next);
     }
 
 }

@@ -11,6 +11,7 @@ module.exports = (app) => {
     app.post('/api/book/delete', BookController.delete);
     app.get('/api/book/fetchAllUnread', BookController.fetchAllUnread);
     app.post('/api/book/updatePageCount', BookController.updatePageCount);
+    app.post('/api/book/fetchReadBooksCount', BookController.fetchAllRead);
 
     //Page Update Controller
     app.get('/api/pageUpdate/', PageUpdateController.greeting);

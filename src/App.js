@@ -94,6 +94,7 @@ function App() {
                 });
     await client.post('/api/pageUpdate/create', pageUpdateBody)
                 .then((result) => {
+                  /*Need to call endpoints for goalchecks*/ 
                 })
                 .catch(err => {
                   console.log(err.response.data.error);
