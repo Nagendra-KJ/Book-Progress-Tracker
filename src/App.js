@@ -4,7 +4,7 @@ import { BookData } from './components/BookData/BookData';
 import { BookInput } from './components/BookInput/BookInput';
 import axios from 'axios';
 import { GoalInput } from './components/GoalInput/GoalInput';
-import { GoalStats } from './components/GoalStats/GoalsStats';
+import { GoalStats } from './components/GoalStats/GoalStats';
 import moment from 'moment/moment';
 
 const client = axios.create({
@@ -28,13 +28,16 @@ function App() {
   const loadBooksReadCount = async () => {
     const firstDay = moment().startOf('year').toDate();
     const lastDay = moment().endOf('year').add(1, 'days').toDate();
-    const {dailyPageGoalData, weeklyPageGoalData} = goalProgress
+    const dailyPageGoalData = goalProgress.dailyPageGoalData;
+    const weeklyPageGoalData = goalProgress.weeklyPageGoalData;
+      
     await client.post('/api/book/fetchReadBooksCount', {startDate: firstDay, endDate: lastDay})
                 .then(result => {
-                  if (goalProgress.annualBookGoalData !== result.data.count)
+                  if (goalProgress.annualBookGoalData !== result.data.count) {
                     setGoalProgress({annualBookGoalData: result.data.count, dailyPageGoalData:dailyPageGoalData, weeklyPageGoalData: weeklyPageGoalData})
+                  }
                 })
-                .catch(err => console.log(err.response.data.error));
+                .catch(err => console.log(err));
   }
 
 
@@ -45,7 +48,7 @@ function App() {
                       setArrReading(response.data);
                 })
                 .catch((err) => {
-                  console.log(err.response.data.error);
+                  console.log(err);
                 })
   }
 
@@ -62,7 +65,7 @@ function App() {
                   if (JSON.stringify(goals) !== JSON.stringify(readingGoal))
                     setReadingGoal(goals);
                 })
-                .catch(err => console.log(err.response.data.error));
+                .catch(err => console.log(err));
   }
 
   const loadPageProgress = async () => {
@@ -73,21 +76,23 @@ function App() {
     var lastDayOfWeek = moment().endOf('week').toDate();
     lastDayOfWeek = moment(lastDayOfWeek).add(1, 'days').toDate();
 
-    var dailyPageProgressUpdate, weeklyPageProgressUpdate;
+    var dailyPageProgressUpdate = 0, weeklyPageProgressUpdate = 0;
 
 
     await client.post('/api/pageUpdate/fetchPageCount', {startDate: currentDate, endDate:nextDate})
           .then((result) => {
-            dailyPageProgressUpdate = result.data[0].pagesCompleted;
+            if (typeof result.data[0] !== 'undefined')
+              dailyPageProgressUpdate = result.data[0].pagesCompleted;
 
           })
-          .catch(err => console.log(err.response.data.error));
+          .catch(err => console.log(err));
   
     await client.post('/api/pageUpdate/fetchPageCount', {startDate: firstDayOfWeek, endDate:lastDayOfWeek})
           .then((result) => {
-            weeklyPageProgressUpdate = result.data[0].pagesCompleted;
+            if (typeof result.data[0] !== 'undefined')
+              weeklyPageProgressUpdate = result.data[0].pagesCompleted;
           })
-          .catch(err => console.log(err.response.data.error));
+          .catch(err => console.log(err));
 
     const annualBookGoalData = goalProgress.annualBookGoalData;
     var newProgressData = {annualBookGoalData:annualBookGoalData, dailyPageGoalData:dailyPageProgressUpdate, weeklyPageGoalData:weeklyPageProgressUpdate};
@@ -108,7 +113,7 @@ function App() {
             setArrReading([...arrReading, newBook]);
           })
           .catch((err)=> {
-            console.log(err.response.data.error)
+            console.log(err)
           });
 
     await client.post('/api/pageUpdate/create', pageUpdateBody)
@@ -118,7 +123,7 @@ function App() {
 
           })
           .catch(err => {
-            console.log(err.response.data.error);
+            console.log(err);
           });
   };
 
@@ -129,7 +134,7 @@ function App() {
                   loadUnreadBooks();
                 })
                 .catch((err) => {
-                  console.log(err.response.data.error);
+                  console.log(err);
                 })
   }
 
@@ -161,7 +166,7 @@ function App() {
                   loadUnreadBooks();
                 })
                 .catch((err) => {
-                  console.log(err.response.data.error);
+                  console.log(err);
                 });
     await client.post('/api/pageUpdate/create', pageUpdateBody)
                 .then((result) => {
@@ -169,7 +174,7 @@ function App() {
                   loadPageProgress(); 
                 })
                 .catch(err => {
-                  console.log(err.response.data.error);
+                  console.log(err);
                 })
   }
 
@@ -182,7 +187,7 @@ function App() {
                   setReadingGoal((({ dailyPageGoal, weeklyPageGoal, annualBookGoal }) => ({ dailyPageGoal, weeklyPageGoal, annualBookGoal }))(newGoals))
                 })
                 .catch(err => {
-                  console.log(err.response.data.error);
+                  console.log(err);
                 });
   }
 
