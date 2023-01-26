@@ -17,13 +17,7 @@ function App() {
   const [readingGoal, setReadingGoal] = useState({dailyPageGoal: 0, weeklyPageGoal: 0, annualBookGoal: 0});
   const [goalProgress, setGoalProgress] = useState({annualBookGoalData: 0, dailyPageGoalData: 0, weeklyPageGoalData: 0});
 
-  useEffect(() => {
-    loadUnreadBooks();
-    loadGoals();
-    loadBooksReadCount();
-    loadPageProgress();
-  },[arrReading, readingGoal, goalProgress])
-
+ 
 
   const loadBooksReadCount = async () => {
     const firstDay = moment().startOf('year').toDate();
@@ -191,6 +185,15 @@ function App() {
                   console.log(err);
                 });
   }
+
+
+  useEffect(() => {
+    loadUnreadBooks();
+    loadGoals();
+    loadBooksReadCount();
+    loadPageProgress();
+  },)
+
 
   return (
     <div className="container-fluid">
