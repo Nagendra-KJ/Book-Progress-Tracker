@@ -22,7 +22,7 @@ function App() {
     loadGoals();
     loadBooksReadCount();
     loadPageProgress();
-  })
+  },[arrReading, readingGoal, goalProgress])
 
 
   const loadBooksReadCount = async () => {
@@ -75,6 +75,7 @@ function App() {
     var firstDayOfWeek = moment().startOf('week').toDate();
     var lastDayOfWeek = moment().endOf('week').toDate();
     lastDayOfWeek = moment(lastDayOfWeek).add(1, 'days').toDate();
+
 
     var dailyPageProgressUpdate = 0, weeklyPageProgressUpdate = 0;
 
