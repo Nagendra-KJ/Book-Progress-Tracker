@@ -19,7 +19,6 @@ module.exports = {
             $lt: req.body.endDate  
         }}, newGoal, options)
             .then((results) => {
-                console.log('Here')
                 res.send(results);
             })
             .catch(next);
