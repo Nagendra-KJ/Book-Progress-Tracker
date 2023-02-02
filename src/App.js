@@ -6,6 +6,7 @@ import axios from 'axios';
 import { GoalInput } from './components/GoalInput/GoalInput';
 import { GoalStats } from './components/GoalStats/GoalStats';
 import moment from 'moment/moment';
+import { BookStats } from './components/BookStats/BookStats';
 
 const client = axios.create({
   baseURL: "http://localhost:3050/"
@@ -16,6 +17,42 @@ function App() {
   const [arrReading, setArrReading] = useState([]);
   const [readingGoal, setReadingGoal] = useState({dailyPageGoal: 0, weeklyPageGoal: 0, annualBookGoal: 0});
   const [goalProgress, setGoalProgress] = useState({annualBookGoalData: 0, dailyPageGoalData: 0, weeklyPageGoalData: 0});
+  const [showProgress, setShowProgress] = useState(false);
+  const [bookStatsData, setBookStatsData] = useState([]);
+
+
+
+
+
+  const showModal = async () => {
+    var monthlyBreakupData = [];
+    const firstDay = moment().startOf('year').toDate();
+    const lastDay = moment().endOf('year').add(1, 'days').toDate();
+    await client.post('/api/book/fetchMonthlyBookBreakup/', {startDate: firstDay, endDate: lastDay})
+                .then(result => {
+                  result.data.forEach((month, index) => {
+                    var monthData = {x:month._id.month, y: month.booksCompleted}
+                    monthlyBreakupData = [...monthlyBreakupData, monthData];
+                  });
+                })
+                .catch(err => console.log(err));
+    await client.post('/api/pageUpdate/fetchMonthlyPageBreakup', {startDate: firstDay, endDate: lastDay})
+                .then(result => {
+                  result.data.forEach((month, index) => {
+                    monthlyBreakupData[index].r = month.pagesCompleted/100;
+                  })
+                })
+                .catch(err => console.log(err));
+
+  
+    setBookStatsData(monthlyBreakupData);
+    setShowProgress(true);
+
+  }
+
+  const hideModal = () => {
+    setShowProgress(false);
+  }
 
  
 
@@ -92,8 +129,9 @@ function App() {
     const annualBookGoalData = goalProgress.annualBookGoalData;
     var newProgressData = {annualBookGoalData:annualBookGoalData, dailyPageGoalData:dailyPageProgressUpdate, weeklyPageGoalData:weeklyPageProgressUpdate};
 
-    if (JSON.stringify(goalProgress) !== JSON.stringify(newProgressData))
+    if (JSON.stringify(goalProgress) !== JSON.stringify(newProgressData)) {
       setGoalProgress(newProgressData);
+    }
     
   }
 
@@ -198,11 +236,12 @@ function App() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between">
-        <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals}/>
+        <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals} showModal={showModal}/>
         <BookInput addBookHandler={addNewBook}/>
         <GoalStats dailyPageGoalData={[goalProgress.dailyPageGoalData, Math.max(0, readingGoal.dailyPageGoal - goalProgress.dailyPageGoalData)]} 
                    weeklyPageGoalData={[goalProgress.weeklyPageGoalData, Math.max(0, readingGoal.weeklyPageGoal - goalProgress.weeklyPageGoalData)]} 
                    annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
+        <BookStats show={showProgress} onHide={hideModal} data={bookStatsData}/>
       </div>
       <div className="row">
         {
