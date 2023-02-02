@@ -12,11 +12,13 @@ module.exports = (app) => {
     app.get('/api/book/fetchAllUnread', BookController.fetchAllUnread);
     app.post('/api/book/updatePageCount', BookController.updatePageCount);
     app.post('/api/book/fetchReadBooksCount', BookController.fetchAllRead);
+    app.post('/api/book/fetchMonthlyBookBreakup', BookController.fetchMonthlyBookBreakup);
 
     //Page Update Controller
     app.get('/api/pageUpdate/', PageUpdateController.greeting);
     app.post('/api/pageUpdate/create', PageUpdateController.create);
     app.post('/api/pageUpdate/fetchPageCount', PageUpdateController.fetchPageCount);
+    app.post('/api/pageUpdate/fetchMonthlyPageBreakup', PageUpdateController.fetchMonthlyPageBreakup);
 
     //Goal Update Controller
     app.get('/api/goal/', GoalController.greeting);

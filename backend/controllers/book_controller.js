@@ -56,6 +56,17 @@ module.exports = {
             .then((count) =>
             res.send({count}))
             .catch(next);
+    },
+
+    fetchMonthlyBookBreakup(req, res, next) {
+        Book.aggregate([
+            { $match: { dateCompleted: {$gte: new Date(req.body.startDate), $lt: new Date(req.body.endDate)} }},
+            { $group: { _id: {month: {$month:"$dateCompleted"}}, booksCompleted: {$sum: 1}}}
+            ])
+            .then(result => {
+                res.send(result);
+            })
+            .catch(next);
     }
 
 }
