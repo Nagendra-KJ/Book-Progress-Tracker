@@ -27,7 +27,8 @@ module.exports = {
     fetchMonthlyPageBreakup(req, res, next) {
         PageUpdate.aggregate([
             { $match: { date: {$gte: new Date(req.body.startDate), $lt: new Date(req.body.endDate)} }},
-            { $group: { _id: {month: {$month:"$date"}}, pagesCompleted: {$sum: "$pagesCompleted"}}}
+            { $group: { _id: {month: {$month:"$date"}}, pagesCompleted: {$sum: "$pagesCompleted"}}},
+            { $sort: { "month": -1 } }
             ])
             .then(result => {
                 res.send(result);

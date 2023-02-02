@@ -61,7 +61,8 @@ module.exports = {
     fetchMonthlyBookBreakup(req, res, next) {
         Book.aggregate([
             { $match: { dateCompleted: {$gte: new Date(req.body.startDate), $lt: new Date(req.body.endDate)} }},
-            { $group: { _id: {month: {$month:"$dateCompleted"}}, booksCompleted: {$sum: 1}}}
+            { $group: { _id: {month: {$month:"$dateCompleted"}}, booksCompleted: {$sum: 1}}},
+            { $sort: { "month": -1 } }
             ])
             .then(result => {
                 res.send(result);

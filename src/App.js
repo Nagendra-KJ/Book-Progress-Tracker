@@ -18,9 +18,36 @@ function App() {
   const [readingGoal, setReadingGoal] = useState({dailyPageGoal: 0, weeklyPageGoal: 0, annualBookGoal: 0});
   const [goalProgress, setGoalProgress] = useState({annualBookGoalData: 0, dailyPageGoalData: 0, weeklyPageGoalData: 0});
   const [showProgress, setShowProgress] = useState(false);
+  const [bookStatsData, setBookStatsData] = useState([]);
 
-  const showModal = () => {
+
+
+
+
+  const showModal = async () => {
+    var monthlyBreakupData = [];
+    const firstDay = moment().startOf('year').toDate();
+    const lastDay = moment().endOf('year').add(1, 'days').toDate();
+    await client.post('/api/book/fetchMonthlyBookBreakup/', {startDate: firstDay, endDate: lastDay})
+                .then(result => {
+                  result.data.forEach((month, index) => {
+                    var monthData = {x:month._id.month, y: month.booksCompleted}
+                    monthlyBreakupData = [...monthlyBreakupData, monthData];
+                  });
+                })
+                .catch(err => console.log(err));
+    await client.post('/api/pageUpdate/fetchMonthlyPageBreakup', {startDate: firstDay, endDate: lastDay})
+                .then(result => {
+                  result.data.forEach((month, index) => {
+                    monthlyBreakupData[index].r = month.pagesCompleted/100;
+                  })
+                })
+                .catch(err => console.log(err));
+
+  
+    setBookStatsData(monthlyBreakupData);
     setShowProgress(true);
+
   }
 
   const hideModal = () => {
@@ -214,7 +241,7 @@ function App() {
         <GoalStats dailyPageGoalData={[goalProgress.dailyPageGoalData, Math.max(0, readingGoal.dailyPageGoal - goalProgress.dailyPageGoalData)]} 
                    weeklyPageGoalData={[goalProgress.weeklyPageGoalData, Math.max(0, readingGoal.weeklyPageGoal - goalProgress.weeklyPageGoalData)]} 
                    annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
-        <BookStats show={showProgress} onHide={hideModal} data={[]}/>
+        <BookStats show={showProgress} onHide={hideModal} data={bookStatsData}/>
       </div>
       <div className="row">
         {
