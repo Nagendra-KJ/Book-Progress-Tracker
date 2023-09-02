@@ -34,13 +34,19 @@ function App() {
                     var monthData = {x:month._id.month, y: month.booksCompleted}
                     monthlyBreakupData = [...monthlyBreakupData, monthData];
                   });
+                    monthlyBreakupData.sort((a, b) => a.x > b.x)
+                    console.log(monthlyBreakupData,'...is what im seeing' )
                 })
                 .catch(err => console.log(err));
     await client.post('/api/pageUpdate/fetchMonthlyPageBreakup', {startDate: firstDay, endDate: lastDay})
                 .then(result => {
+                  result.data.sort((a, b) => a._id.month > b._id.month)
+                  console.log(result.data,'...is page breakup')
                   result.data.forEach((month, index) => {
+                    console.log(month, index, '...is the shizz')  
                     monthlyBreakupData[index].r = month.pagesCompleted/100;
                   })
+                  
                 })
                 .catch(err => console.log(err));
 

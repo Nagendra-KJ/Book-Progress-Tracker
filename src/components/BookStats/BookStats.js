@@ -38,7 +38,7 @@ function BookStats(props) {
                 callbacks: {
                     label: (context) => {
                         return (`Total Number of Books Completed: ${context.raw.y}
-                        Total Number of Pages Read: ${context.raw.r * 100}`);
+                        Total Number of Pages Read: ${Math.round(context.raw.r * 100)}`);
                     }
                 }
             }
@@ -53,6 +53,7 @@ function BookStats(props) {
           },
         ],
       };
+
 
     return (
         <Modal
