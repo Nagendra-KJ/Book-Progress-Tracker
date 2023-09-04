@@ -68,7 +68,7 @@ function TbrList(props) {
                 <div className="row" style={{maxHeight:'180px', overflowY:'auto', overflowX:'hidden'}}>
                     {
                         props.tbrList.map((tbr, index) => {
-                            return <TbrEntry tbr={tbr} key={tbr._id} deleteHandler={() => {props.deleteHandler(index)}}/>
+                            return <TbrEntry tbr={tbr} key={tbr._id} deleteHandler={() => {props.deleteHandler(index)}} updateHandler={() => {props.updateHandler(index)}}/>
                         })
                     }
                 </div>

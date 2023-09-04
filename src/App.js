@@ -272,6 +272,20 @@ function App() {
                 });
   }
 
+  const updateTBR = async (index) => {
+    var bookTBR = arrTbr[index]
+    bookTBR.pagesCompleted = 0
+    bookTBR.dateAdded = moment().toDate();
+    await client.post('/api/book/create/', bookTBR)
+    .then((response) => {
+      setArrReading([...arrReading, bookTBR]);
+    })
+    .catch((err)=> {
+      console.log(err)
+    });
+    deleteTBR(index);
+  }
+
 
   useEffect(() => {
     loadUnreadBooks();
@@ -291,7 +305,8 @@ function App() {
                    weeklyPageGoalData={[goalProgress.weeklyPageGoalData, Math.max(0, readingGoal.weeklyPageGoal - goalProgress.weeklyPageGoalData)]} 
                    annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
         <BookStats show={showProgress} onHide={hideProgressModal} data={bookStatsData}/>
-        <TbrList show={showTBR} onHide={hideTBRModal} addTbrHandler={addTBR} tbrList={arrTbr} deleteHandler={deleteTBR}/>
+        <TbrList show={showTBR} onHide={hideTBRModal} addTbrHandler={addTBR} 
+                tbrList={arrTbr} deleteHandler={deleteTBR} updateHandler={updateTBR}/>
       </div>
       <div className="row">
         {
