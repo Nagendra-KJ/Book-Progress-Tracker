@@ -30,4 +30,5 @@ module.exports = (app) => {
     app.get('/api/tbr/', TbrController.greeting);
     app.post('/api/tbr/create/', TbrController.create);
     app.post('/api/tbr/delete/', TbrController.delete);
+    app.get('/api/tbr/fetchTBR/', TbrController.fetchAllTbr);
 }

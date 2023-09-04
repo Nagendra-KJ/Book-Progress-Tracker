@@ -24,13 +24,9 @@ module.exports = {
 
     fetchAllTbr(req, res, next)  {
         const buildQuery = {};
-
-        buildQuery.dateCompleted = {
-            $exists: false
-        }
         Tbr.find(buildQuery)
-            .then((books) =>
-            res.send(books))
+            .then((tbr) =>
+            res.send(tbr))
             .catch(next);
     },
 

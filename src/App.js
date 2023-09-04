@@ -72,7 +72,13 @@ function App() {
   }
 
   const addTBR = async (tbrBook) => {
-    setArrTbr([...arrTbr, tbrBook])
+    await client.post('/api/tbr/create/', tbrBook)
+    .then((response) => {
+      setArrTbr([...arrTbr, tbrBook]);
+    })
+    .catch((err)=> {
+      console.log(err)
+    });
   }
  
 
@@ -103,7 +109,19 @@ function App() {
                 })
   }
 
+  const loadTBR = async () => {
+    return await client.get('/api/tbr/fetchTBR')
+                  .then((response) => {
+                    if (JSON.stringify(response.data) !== JSON.stringify(arrTbr))
+                        setArrTbr(response.data);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  })
+  }
+
   const loadGoals = async () => {
+    console.log('Loading Goals')
     const firstDay = moment().startOf('year').toDate();
     const lastDay = moment().endOf('year').add(1, 'days').toDate();
     await client.post('/api/goal/getGoal', {startDate: firstDay, endDate: lastDay})
@@ -250,6 +268,7 @@ function App() {
     loadGoals();
     loadBooksReadCount();
     loadPageProgress();
+    loadTBR();
   },)
 
 
@@ -262,7 +281,7 @@ function App() {
                    weeklyPageGoalData={[goalProgress.weeklyPageGoalData, Math.max(0, readingGoal.weeklyPageGoal - goalProgress.weeklyPageGoalData)]} 
                    annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
         <BookStats show={showProgress} onHide={hideProgressModal} data={bookStatsData}/>
-        <TbrList show={showTBR} onHide={hideTBRModal} addtbrhandler={addTBR} tbrlist={arrTbr}/>
+        <TbrList show={showTBR} onHide={hideTBRModal} addTbrHandler={addTBR} tbrlist={arrTbr}/>
       </div>
       <div className="row">
         {

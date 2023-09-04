@@ -18,7 +18,7 @@ function TbrList(props) {
      const submitNewBook = (values, actions) => {
         var {title, totalPages} = values;
         totalPages = parseInt(totalPages);
-        props.addtbrhandler({title:title, totalPages:totalPages});
+        props.addTbrHandler({title:title, totalPages:totalPages});
         actions.resetForm();
     }
 
@@ -35,7 +35,8 @@ function TbrList(props) {
 
     return (
         <Modal 
-        {...props}
+        show={props.show}
+        onHide={props.onHide}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -65,13 +66,6 @@ function TbrList(props) {
                     </Card.Body>
                 </Form.Group>
                 </Form>
-                <div className="row">
-                {
-                    props.tbrlist.map((book, index) => {
-                            return <Button className="row">{book.title}</Button>
-                    })
-                }
-      </div>
             </Modal.Body>
         </Modal>
     );
