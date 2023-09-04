@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { Card } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
+import { TbrEntry } from "../TbrEntry/TbrEntry";
 
 
 function TbrList(props) {
@@ -66,6 +67,13 @@ function TbrList(props) {
                     </Card.Body>
                 </Form.Group>
                 </Form>
+                <div className="row" style={{maxHeight:'180px', overflowY:'auto', overflowX:'hidden'}}>
+                    {
+                        props.tbrList.map((book, index) => {
+                            return <TbrEntry book={book} key={book._id}/>
+                        })
+                    }
+                </div>
             </Modal.Body>
         </Modal>
     );

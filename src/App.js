@@ -281,7 +281,7 @@ function App() {
                    weeklyPageGoalData={[goalProgress.weeklyPageGoalData, Math.max(0, readingGoal.weeklyPageGoal - goalProgress.weeklyPageGoalData)]} 
                    annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
         <BookStats show={showProgress} onHide={hideProgressModal} data={bookStatsData}/>
-        <TbrList show={showTBR} onHide={hideTBRModal} addTbrHandler={addTBR} tbrlist={arrTbr}/>
+        <TbrList show={showTBR} onHide={hideTBRModal} addTbrHandler={addTBR} tbrList={arrTbr}/>
       </div>
       <div className="row">
         {
