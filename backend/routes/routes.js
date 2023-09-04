@@ -1,6 +1,7 @@
 const BookController = require('../controllers/book_controller');
 const PageUpdateController = require('../controllers/page_update_controller');
 const GoalController = require('../controllers/goal_controller');
+const TbrController = require('../controllers/tbr_controller');
 
 module.exports = (app) => {
     
@@ -24,4 +25,9 @@ module.exports = (app) => {
     app.get('/api/goal/', GoalController.greeting);
     app.post('/api/goal/updateGoal', GoalController.upsertGoal);
     app.post('/api/goal/getGoal', GoalController.findGoal);
+
+    //TBR List Controller
+    app.get('/api/tbr/', TbrController.greeting);
+    app.post('/api/tbr/create/', TbrController.create);
+    app.post('/api/tbr/delete/', TbrController.delete);
 }
