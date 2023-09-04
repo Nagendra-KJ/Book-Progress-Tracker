@@ -7,6 +7,7 @@ import { GoalInput } from './components/GoalInput/GoalInput';
 import { GoalStats } from './components/GoalStats/GoalStats';
 import moment from 'moment/moment';
 import { BookStats } from './components/BookStats/BookStats';
+import { TbrList } from './components/TbrList/TbrList';
 
 const client = axios.create({
   baseURL: "http://localhost:3050/"
@@ -15,16 +16,18 @@ const client = axios.create({
 function App() {
 
   const [arrReading, setArrReading] = useState([]);
+  const [arrTbr, setArrTbr] = useState([]);
   const [readingGoal, setReadingGoal] = useState({dailyPageGoal: 0, weeklyPageGoal: 0, annualBookGoal: 0});
   const [goalProgress, setGoalProgress] = useState({annualBookGoalData: 0, dailyPageGoalData: 0, weeklyPageGoalData: 0});
   const [showProgress, setShowProgress] = useState(false);
+  const [showTBR, setShowTBR] = useState(false);
   const [bookStatsData, setBookStatsData] = useState([]);
 
 
 
 
 
-  const showModal = async () => {
+  const showProgressModal = async () => {
     var monthlyBreakupData = [];
     const firstDay = moment().startOf('year').toDate();
     const lastDay = moment().endOf('year').add(1, 'days').toDate();
@@ -56,10 +59,21 @@ function App() {
 
   }
 
-  const hideModal = () => {
+  const showTBRModal = () => {
+    setShowTBR(true);
+  }
+
+  const hideProgressModal = () => {
     setShowProgress(false);
   }
 
+  const hideTBRModal = () => {
+    setShowTBR(false);
+  }
+
+  const addTBR = async (tbrBook) => {
+    setArrTbr([...arrTbr, tbrBook])
+  }
  
 
   const loadBooksReadCount = async () => {
@@ -242,12 +256,13 @@ function App() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between">
-        <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals} showModal={showModal}/>
+        <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals} showProgressModal={showProgressModal} showTBRModal={showTBRModal}/>
         <BookInput addBookHandler={addNewBook}/>
         <GoalStats dailyPageGoalData={[goalProgress.dailyPageGoalData, Math.max(0, readingGoal.dailyPageGoal - goalProgress.dailyPageGoalData)]} 
                    weeklyPageGoalData={[goalProgress.weeklyPageGoalData, Math.max(0, readingGoal.weeklyPageGoal - goalProgress.weeklyPageGoalData)]} 
                    annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
-        <BookStats show={showProgress} onHide={hideModal} data={bookStatsData}/>
+        <BookStats show={showProgress} onHide={hideProgressModal} data={bookStatsData}/>
+        <TbrList show={showTBR} onHide={hideTBRModal} addtbrhandler={addTBR} tbrlist={arrTbr}/>
       </div>
       <div className="row">
         {

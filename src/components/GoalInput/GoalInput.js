@@ -64,7 +64,10 @@ function GoalInput(props)   {
                 {touched.annualBookGoal && errors.annualBookGoal ? <p className='text-danger'>{errors.annualBookGoal}</p>:''}
                 <div className="col-12 text-center">
                     <Button type='submit' className="btn-primary" size='lg' style={{margin:'1em'}}> Set Goals </Button>
-                    <Button type='button' className="btn-primary" size='lg' style={{margin:'1em'}} onClick={props.showModal}> View Progress </Button>
+                    <Button type='button' className="btn-primary" size='lg' style={{margin:'1em'}} onClick={props.showProgressModal}> View Progress </Button>
+                </div>
+                <div className="col-12 text-center">
+                    <Button type='button' className="btn-primary" size='lg' style={{margin:'1em'}} onClick={props.showTBRModal  }> View TBR List </Button>
                 </div>
             </Card.Body>
         </Form.Group>
