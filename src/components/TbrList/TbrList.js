@@ -30,9 +30,7 @@ function TbrList(props) {
         },  
         validationSchema: inputSchema,
         onSubmit: submitNewBook
-    });
-
-
+    })
 
     return (
         <Modal 
@@ -69,8 +67,8 @@ function TbrList(props) {
                 </Form>
                 <div className="row" style={{maxHeight:'180px', overflowY:'auto', overflowX:'hidden'}}>
                     {
-                        props.tbrList.map((book, index) => {
-                            return <TbrEntry book={book} key={book._id}/>
+                        props.tbrList.map((tbr, index) => {
+                            return <TbrEntry tbr={tbr} key={tbr._id} deleteHandler={() => {props.deleteHandler(index)}}/>
                         })
                     }
                 </div>

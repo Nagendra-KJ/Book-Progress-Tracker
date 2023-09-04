@@ -14,8 +14,8 @@ module.exports = {
     },
 
     delete(req, res, next)  {
-        const bookId = req.body.id;
-        Book.findByIdAndDelete(bookId)
+        const tbrID = req.body.id;
+        Tbr.findByIdAndDelete(tbrID)
             .then((result) => {
                 res.send(result)
             })

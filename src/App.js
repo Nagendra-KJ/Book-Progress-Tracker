@@ -209,6 +209,16 @@ function App() {
                 })
   }
 
+  const deleteTBR = async (tbrIndex) => {
+    await client.post('/api/tbr/delete', {id: arrTbr[tbrIndex]._id})
+                .then((response) => {
+                  loadTBR()
+                })
+                .catch((err) => {
+                  console.log(err);
+                })
+  }
+
   const updatePageCount = async (newPageCount, index) => {
     var dateCompleted = moment().toDate();
     var pageProgress = newPageCount - arrReading[index].pagesCompleted;
@@ -281,7 +291,7 @@ function App() {
                    weeklyPageGoalData={[goalProgress.weeklyPageGoalData, Math.max(0, readingGoal.weeklyPageGoal - goalProgress.weeklyPageGoalData)]} 
                    annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>
         <BookStats show={showProgress} onHide={hideProgressModal} data={bookStatsData}/>
-        <TbrList show={showTBR} onHide={hideTBRModal} addTbrHandler={addTBR} tbrList={arrTbr}/>
+        <TbrList show={showTBR} onHide={hideTBRModal} addTbrHandler={addTBR} tbrList={arrTbr} deleteHandler={deleteTBR}/>
       </div>
       <div className="row">
         {
