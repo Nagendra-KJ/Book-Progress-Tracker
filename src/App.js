@@ -296,8 +296,8 @@ function App() {
   return (
     <div className="container-fluid">
       <div className="d-flex justify-content-between">
-        <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals} showProgressModal={showProgressModal} showTBRModal={showTBRModal}/>
-        <BookInput addBookHandler={addNewBook}/>
+        <GoalInput dailyPageGoal={readingGoal.dailyPageGoal} weeklyPageGoal={readingGoal.weeklyPageGoal} annualBookGoal={readingGoal.annualBookGoal} updateGoals={updateGoals} showProgressModal={showProgressModal}/>
+        <BookInput addBookHandler={addNewBook} showTBRModal={showTBRModal}/>
         <GoalStats dailyPageGoalData={[goalProgress.dailyPageGoalData, Math.max(0, readingGoal.dailyPageGoal - goalProgress.dailyPageGoalData)]} 
                    weeklyPageGoalData={[goalProgress.weeklyPageGoalData, Math.max(0, readingGoal.weeklyPageGoal - goalProgress.weeklyPageGoalData)]} 
                    annualBookGoalData={[goalProgress.annualBookGoalData, Math.max(0, readingGoal.annualBookGoal - goalProgress.annualBookGoalData)]}/>

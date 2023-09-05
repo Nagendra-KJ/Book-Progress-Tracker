@@ -66,9 +66,6 @@ function GoalInput(props)   {
                     <Button type='submit' className="btn-primary" size='lg' style={{margin:'1em'}}> Set Goals </Button>
                     <Button type='button' className="btn-primary" size='lg' style={{margin:'1em'}} onClick={props.showProgressModal}> View Progress </Button>
                 </div>
-                <div className="col-12 text-center">
-                    <Button type='button' className="btn-primary" size='lg' style={{margin:'1em'}} onClick={props.showTBRModal  }> To Be Read List </Button>
-                </div>
             </Card.Body>
         </Form.Group>
         </Form>

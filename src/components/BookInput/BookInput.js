@@ -68,6 +68,9 @@ function BookInput(props) {
                 <div className="col-12 text-center">
                     <Button type='submit' className="btn-primary" size='lg'> Add </Button>
                 </div>
+                <div className="col-12 text-center">
+                    <Button type='button' className="btn-primary" size='lg' style={{margin:'1em'}} onClick={props.showTBRModal  }> To Be Read List </Button>
+                </div>
             </Card.Body>
         </Form.Group>
         </Form>
