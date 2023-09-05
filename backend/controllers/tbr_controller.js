@@ -30,4 +30,12 @@ module.exports = {
             .catch(next);
     },
 
+    updateTbr(req, res, next) {
+        const buildQuery = {};
+        buildQuery.title = req.body.title;
+        Tbr.findOneAndDelete(buildQuery)
+            .then((tbr) => res.send(tbr))
+            .catch(next);
+    }
+
 }

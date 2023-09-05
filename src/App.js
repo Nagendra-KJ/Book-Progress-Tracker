@@ -193,6 +193,14 @@ function App() {
           .catch(err => {
             console.log(err);
           });
+    
+    await client.post('/api/tbr/update', newBook)
+                .then((response) => {
+                  loadTBR()
+                })
+                .catch((err) => {
+                  console.log(err)
+                });
   };
 
 
