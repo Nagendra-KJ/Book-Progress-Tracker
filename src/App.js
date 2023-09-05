@@ -38,15 +38,12 @@ function App() {
                     monthlyBreakupData = [...monthlyBreakupData, monthData];
                   });
                     monthlyBreakupData.sort((a, b) => a.x > b.x)
-                    console.log(monthlyBreakupData,'...is what im seeing' )
                 })
                 .catch(err => console.log(err));
     await client.post('/api/pageUpdate/fetchMonthlyPageBreakup', {startDate: firstDay, endDate: lastDay})
                 .then(result => {
                   result.data.sort((a, b) => a._id.month > b._id.month)
-                  console.log(result.data,'...is page breakup')
                   result.data.forEach((month, index) => {
-                    console.log(month, index, '...is the shizz')  
                     monthlyBreakupData[index].r = month.pagesCompleted/100;
                   })
                   
@@ -101,8 +98,9 @@ function App() {
   const loadUnreadBooks = async () => {
     return await client.get('/api/book/fetchAllUnread')
                 .then((response) => {
-                  if (JSON.stringify(response.data) !== JSON.stringify(arrReading))
+                  if (JSON.stringify(response.data) !== JSON.stringify(arrReading)) {
                       setArrReading(response.data);
+                  }
                 })
                 .catch((err) => {
                   console.log(err);
@@ -121,7 +119,6 @@ function App() {
   }
 
   const loadGoals = async () => {
-    console.log('Loading Goals')
     const firstDay = moment().startOf('year').toDate();
     const lastDay = moment().endOf('year').add(1, 'days').toDate();
     await client.post('/api/goal/getGoal', {startDate: firstDay, endDate: lastDay})
@@ -293,7 +290,7 @@ function App() {
     loadBooksReadCount();
     loadPageProgress();
     loadTBR();
-  },)
+  }, [arrReading, arrTbr, goalProgress])
 
 
   return (
