@@ -1,0 +1,441 @@
+[{
+  "_id": {
+    "$oid": "63d2d5da3b406fb9e77c759a"
+  },
+  "title": "I kissed Shara Wheeler",
+  "pagesCompleted": 324,
+  "totalPages": 324,
+  "dateAdded": {
+    "$date": "2023-01-26T19:34:50.923Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-01-28T22:13:04.384Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "63d2d5ef3b406fb9e77c75b4"
+  },
+  "title": "A Portrait of a artist as a young man",
+  "pagesCompleted": 263,
+  "totalPages": 263,
+  "dateAdded": {
+    "$date": "2023-01-26T19:35:11.154Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-01-31T18:02:58.145Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "63d2d6813b406fb9e77c75e8"
+  },
+  "title": "Thursday Murder Club",
+  "pagesCompleted": 382,
+  "totalPages": 382,
+  "dateAdded": {
+    "$date": "2023-01-26T19:37:37.446Z"
+  },
+  "dateCompleted": {
+    "$date": "2023-01-26T19:37:37.446Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "63d2d6a23b406fb9e77c7611"
+  },
+  "title": "The Call of the wild",
+  "pagesCompleted": 172,
+  "totalPages": 172,
+  "dateAdded": {
+    "$date": "2023-01-26T19:38:10.765Z"
+  },
+  "dateCompleted": {
+    "$date": "2023-01-26T19:38:10.765Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "63d2d6c23b406fb9e77c7644"
+  },
+  "title": "anxious people",
+  "pagesCompleted": 336,
+  "totalPages": 336,
+  "dateAdded": {
+    "$date": "2023-01-26T19:38:42.122Z"
+  },
+  "dateCompleted": {
+    "$date": "2023-01-26T19:38:42.122Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "63d2d6ed3b406fb9e77c7677"
+  },
+  "title": "ninth house",
+  "pagesCompleted": 461,
+  "totalPages": 461,
+  "dateAdded": {
+    "$date": "2023-01-26T19:39:24.876Z"
+  },
+  "dateCompleted": {
+    "$date": "2023-01-26T19:39:24.876Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "63d2d73a3b406fb9e77c76aa"
+  },
+  "title": "beach read",
+  "pagesCompleted": 361,
+  "totalPages": 361,
+  "dateAdded": {
+    "$date": "2023-01-26T19:40:42.410Z"
+  },
+  "dateCompleted": {
+    "$date": "2023-01-26T19:40:42.410Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "63d67cc3e9c00010d0589c69"
+  },
+  "title": "the man who died twice",
+  "pagesCompleted": 367,
+  "totalPages": 367,
+  "dateAdded": {
+    "$date": "2023-01-29T14:03:47.791Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-01-31T18:02:55.633Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "63dbb450b0241bd3132f3965"
+  },
+  "title": "The Cartographers",
+  "pagesCompleted": 487,
+  "totalPages": 487,
+  "dateAdded": {
+    "$date": "2023-02-02T13:02:08.831Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-02-06T22:34:20.656Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "63dbf9a5cc5f99e6517fe23b"
+  },
+  "title": "Hell Bent",
+  "pagesCompleted": 484,
+  "totalPages": 484,
+  "dateAdded": {
+    "$date": "2023-02-02T17:57:57.761Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-06-16T17:59:16.036Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "63e22f6d2a9702481765e0ea"
+  },
+  "title": "The Invisible Man",
+  "pagesCompleted": 196,
+  "totalPages": 196,
+  "dateAdded": {
+    "$date": "2023-02-07T11:01:00.952Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-03-10T20:19:35.182Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "63e6324621863c18cd36986e"
+  },
+  "title": "The Bullet That Missed",
+  "pagesCompleted": 291,
+  "totalPages": 291,
+  "dateAdded": {
+    "$date": "2023-02-10T12:02:14.247Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-07-13T16:08:43.860Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "640b3d27b7d30e19579a826a"
+  },
+  "title": "The Screaming Staircase",
+  "pagesCompleted": 307,
+  "totalPages": 307,
+  "dateAdded": {
+    "$date": "2023-03-10T14:22:30.875Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-06-19T20:49:58.813Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "640b3d45b7d30e19579a827a"
+  },
+  "title": "The Bangalore Detectives Club",
+  "pagesCompleted": 285,
+  "totalPages": 285,
+  "dateAdded": {
+    "$date": "2023-03-10T14:23:01.042Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-07-18T09:09:53.041Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "648ca4c6be0ef0248f354643"
+  },
+  "title": "Yellowface",
+  "pagesCompleted": 350,
+  "totalPages": 350,
+  "dateAdded": {
+    "$date": "2023-06-16T18:07:02.227Z"
+  },
+  "dateCompleted": {
+    "$date": "2023-06-16T18:07:02.227Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "648ca561be0ef0248f35469b"
+  },
+  "title": "Happy Place",
+  "pagesCompleted": 388,
+  "totalPages": 388,
+  "dateAdded": {
+    "$date": "2023-06-16T18:09:37.163Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-07-13T16:08:47.209Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "648ca5dfbe0ef0248f3546b5"
+  },
+  "title": "The Final Empire",
+  "pagesCompleted": 537,
+  "totalPages": 537,
+  "dateAdded": {
+    "$date": "2023-06-16T18:11:43.901Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-07-15T19:31:34.827Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64a31dde87e6c32d43ac467a"
+  },
+  "title": "Are You there god? it's me, margaret",
+  "pagesCompleted": 149,
+  "totalPages": 149,
+  "dateAdded": {
+    "$date": "2023-07-03T19:13:34.744Z"
+  },
+  "dateCompleted": {
+    "$date": "2023-07-03T19:13:34.744Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64b183de9bdd8172ba6b52da"
+  },
+  "title": "Malibu Rising",
+  "pagesCompleted": 330,
+  "totalPages": 330,
+  "dateAdded": {
+    "$date": "2023-07-14T17:20:30.011Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-08-02T22:08:56.823Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64baecea9bdd8172ba6b5451"
+  },
+  "title": "Vera Wong's Unsolicited advice for murderers",
+  "pagesCompleted": 290,
+  "totalPages": 290,
+  "dateAdded": {
+    "$date": "2023-07-21T20:39:06.916Z"
+  },
+  "dateCompleted": {
+    "$date": "2023-07-21T20:39:06.916Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64c009809bdd8172ba6b5498"
+  },
+  "title": "Our Violent Ends",
+  "pagesCompleted": 473,
+  "totalPages": 473,
+  "dateAdded": {
+    "$date": "2023-07-25T17:42:24.085Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-07-28T16:11:58.151Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64c009d29bdd8172ba6b54d3"
+  },
+  "title": "This is how you lose the time war",
+  "pagesCompleted": 123,
+  "totalPages": 123,
+  "dateAdded": {
+    "$date": "2023-07-25T17:43:46.460Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-07-28T16:11:59.874Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64c77bcb9bdd8172ba6b5667"
+  },
+  "title": "City of wind",
+  "pagesCompleted": 369,
+  "totalPages": 369,
+  "dateAdded": {
+    "$date": "2023-07-31T09:15:55.111Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-08-23T03:11:51.833Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64e5791b7ca393dffbc7293c"
+  },
+  "title": "SPQR",
+  "pagesCompleted": 606,
+  "totalPages": 606,
+  "dateAdded": {
+    "$date": "2023-08-23T03:12:27.534Z"
+  },
+  "dateCompleted": {
+    "$date": "2023-08-23T03:12:27.534Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e5794f7ca393dffbc72974"
+  },
+  "title": "The Marriage Portrait",
+  "pagesCompleted": 355,
+  "totalPages": 355,
+  "dateAdded": {
+    "$date": "2023-08-23T03:13:19.121Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-08-25T22:38:35.559Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64e92daffc1feb0f3e7fa9b7"
+  },
+  "title": "The Gene",
+  "pagesCompleted": 592,
+  "totalPages": 592,
+  "dateAdded": {
+    "$date": "2023-08-25T22:39:43.010Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-09-05T01:22:40.504Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64f31ec07ab0aa9356dcc307"
+  },
+  "title": "Flowers For Algernon",
+  "pagesCompleted": 240,
+  "totalPages": 240,
+  "dateAdded": {
+    "$date": "2023-09-02T11:38:39.828Z"
+  },
+  "__v": 0,
+  "dateCompleted": {
+    "$date": "2023-09-05T00:51:16.102Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64f70420ff12da1bb3bb29f9"
+  },
+  "title": "The Burning God",
+  "pagesCompleted": 28,
+  "totalPages": 622,
+  "dateAdded": {
+    "$date": "2023-09-05T10:34:07.936Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64f70475ff12da1bb3bb2a35"
+  },
+  "title": "Morning Star",
+  "pagesCompleted": 0,
+  "totalPages": 544,
+  "dateAdded": {
+    "$date": "2023-09-05T10:35:33.383Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64f70460ff12da1bb3bb2a27"
+  },
+  "title": "The Villa",
+  "pagesCompleted": 22,
+  "totalPages": 279,
+  "dateAdded": {
+    "$date": "2023-09-05T10:36:39.727Z"
+  },
+  "__v": 0
+}]

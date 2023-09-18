@@ -1,0 +1,12 @@
+[{
+  "_id": {
+    "$oid": "63d2d5c6dd439e64e705c4a5"
+  },
+  "__v": 0,
+  "annualBookGoal": 35,
+  "dailyPageGoal": 150,
+  "date": {
+    "$date": "2023-09-05T10:24:31.576Z"
+  },
+  "weeklyPageGoal": 1000
+}]
